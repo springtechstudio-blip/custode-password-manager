@@ -1,0 +1,7 @@
+{
+  "name": "Custode Password Manager",
+  "description": "An essential and secure password manager with specialized vaults for personal passwords, private notes, and developer API keys.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}

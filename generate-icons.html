@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generatore Icone Custode</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px;
+            background: #f0f0f0;
+        }
+        .icon-container {
+            margin: 20px;
+            text-align: center;
+        }
+        canvas {
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            background: white;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #1E3A8A;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #2952B6;
+        }
+        h1 {
+            color: #1E3A8A;
+        }
+        .instructions {
+            max-width: 600px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>🛡️ Generatore Icone Custode</h1>
+
+    <div class="instructions">
+        <h3>Istruzioni:</h3>
+        <ol>
+            <li>Clicca sui pulsanti "Scarica" sotto per salvare le icone</li>
+            <li>Salva <strong>icon-192.png</strong> nella cartella <code>public/</code></li>
+            <li>Salva <strong>icon-512.png</strong> nella cartella <code>public/</code></li>
+            <li>Le icone sono pronte per il deploy!</li>
+        </ol>
+    </div>
+
+    <div class="icon-container">
+        <h3>Icona 192x192</h3>
+        <canvas id="icon-192" width="192" height="192"></canvas>
+        <br>
+        <button onclick="downloadIcon('icon-192', 'icon-192.png')">📥 Scarica icon-192.png</button>
+    </div>
+
+    <div class="icon-container">
+        <h3>Icona 512x512</h3>
+        <canvas id="icon-512" width="512" height="512"></canvas>
+        <br>
+        <button onclick="downloadIcon('icon-512', 'icon-512.png')">📥 Scarica icon-512.png</button>
+    </div>
+
+    <script>
+        function drawIcon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+
+            // Gradient background
+            const gradient = ctx.createLinearGradient(0, 0, size, size);
+            gradient.addColorStop(0, '#1E3A8A');
+            gradient.addColorStop(1, '#3B82F6');
+            ctx.fillStyle = gradient;
+            ctx.fillRect(0, 0, size, size);
+
+            // Draw shield
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            const centerX = size / 2;
+            const centerY = size / 2;
+            const shieldWidth = size * 0.5;
+            const shieldHeight = size * 0.6;
+
+            ctx.moveTo(centerX, centerY - shieldHeight/2);
+            ctx.lineTo(centerX + shieldWidth/2, centerY - shieldHeight/2 + shieldHeight/4);
+            ctx.lineTo(centerX + shieldWidth/2, centerY + shieldHeight/4);
+            ctx.lineTo(centerX, centerY + shieldHeight/2);
+            ctx.lineTo(centerX - shieldWidth/2, centerY + shieldHeight/4);
+            ctx.lineTo(centerX - shieldWidth/2, centerY - shieldHeight/2 + shieldHeight/4);
+            ctx.closePath();
+            ctx.fill();
+
+            // Draw lock
+            ctx.fillStyle = '#1E3A8A';
+            const lockWidth = size * 0.15;
+            const lockHeight = size * 0.2;
+            const lockX = centerX - lockWidth/2;
+            const lockY = centerY - lockHeight/4;
+
+            // Lock body
+            ctx.fillRect(lockX, lockY + lockHeight/3, lockWidth, lockHeight * 2/3);
+
+            // Lock shackle
+            ctx.strokeStyle = '#1E3A8A';
+            ctx.lineWidth = size * 0.025;
+            ctx.beginPath();
+            ctx.arc(centerX, lockY + lockHeight/3, lockWidth/2.5, Math.PI, 0, true);
+            ctx.stroke();
+
+            // Keyhole
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(centerX, lockY + lockHeight/2, lockWidth/8, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillRect(centerX - lockWidth/16, lockY + lockHeight/2, lockWidth/8, lockHeight/4);
+        }
+
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+
+        // Generate icons on load
+        drawIcon('icon-192', 192);
+        drawIcon('icon-512', 512);
+    </script>
+</body>
+</html>

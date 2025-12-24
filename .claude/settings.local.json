@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dir /s)",
+      "Bash(ls:*)",
+      "Bash(cat:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout:*)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(dir:*)",
+      "Bash(findstr:*)",
+      "Bash(if exist lib rmdir /s /q lib)",
+      "Bash(xcopy:*)",
+      "Bash(powershell -Command \"Move-Item -Path ''src\\\\lib'' -Destination ''lib'' -Force\")",
+      "Bash(powershell -Command \"Move-Item -Path ''src\\\\contexts'' -Destination ''contexts'' -Force\")",
+      "Bash(powershell:*)",
+      "Bash(if not exist docs mkdir docs)",
+      "Bash(start generate-icons.html)",
+      "Bash(git add:*)"
+    ]
+  }
+}
